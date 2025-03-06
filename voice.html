@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognition Voting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .voting-options {
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Online Voting</h1>
+    <p>Click the button and say your vote (e.g., "Vote for Option A"):</p>
+    <button id="start-record-btn">Start Voice Recognition</button>
+    <p id="status"></p>
+    <div class="voting-options">
+        <button>Party 1</button>
+        <button>Party 2</button>
+        <button>Party 3</button>
+        <button>Party 4</button>
+        <button>Party 5</button>
+        <button>Party 6</button>
+        <button>NOTA</button>
+    </div>
+    <p id="result"></p>
+
+    <script>
+        const startRecordBtn = document.getElementById('start-record-btn');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        const votingOptions = document.querySelectorAll('.voting-options button');
+
+        // Check for browser support
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                status.textContent = 'Voice recognition started. Please speak.';
+            };
+
+            recognition.onspeechend = () => {
+                status.textContent = 'Voice recognition ended.';
+                recognition.stop();
+            };
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript.toLowerCase();
+                status.textContent = 'Voice recognition result received: ' + speechResult;
+
+                // Check the recognized speech and simulate a vote
+                votingOptions.forEach(option => {
+                    const optionText = option.textContent.toLowerCase();
+                    if (speechResult.includes(optionText)) {
+                        result.textContent = 'You voted for: ' + option.textContent;
+                    }
+                });
+            };
+
+            recognition.onerror = (event) => {
+                status.textContent = 'Error occurred in recognition: ' + event.error;
+            };
+
+            startRecordBtn.addEventListener('click', () => {
+                recognition.start();
+            });
+        } else {
+            status.textContent = 'Sorry, your browser does not support voice recognition.';
+        }
+    </script>
+</body>
+</html>

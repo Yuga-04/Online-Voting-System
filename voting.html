@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote</title>
+    <link rel="icon" href="1.png">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #E0F7FA;
+    color: #fff;
+}
+h2 {
+    margin-top:0.5rem;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+    letter-spacing:3px;
+    color:black;
+}
+.parties {
+    margin:0.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    animation: slideIn 1s ease-in-out;
+    font-size: large;
+    color:black;
+}
+.parties label {
+    display:block;
+    margin-bottom: 10px;
+    cursor: pointer;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.btn{
+    border: none;
+    letter-spacing:4px;
+    margin:auto;
+    width:10rem;
+    height:2rem;
+    background-color: #1976D2;
+    color:white;
+    border-radius:5px;
+    cursor: pointer;
+    font-size:large;
+    transition: background-color 0.3s ease;
+    animation: fadeIn 1s ease-in-out;
+    position:relative;
+    box-shadow: 3px 3px 5px rgba(31,38,135,0.37);
+    border-left:1px solid rgba(31,38,135,0.37);
+    border-top:1px solid rgba(31,38,135,0.37);
+}
+.btn:hover{
+    background-color:#0D47A1;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.v{
+    background: transparent;
+    color: transparent;
+    outline: none;
+    border: none;
+}
+    </style>
+</head>
+<body>
+    <h2>SELECT THE PARTY</h2>
+    <div class="parties">
+        <label for="PARTY A"><input type="radio" name="party" id="PARTY A" value="PARTY A"> PARTY A</label><br>
+        <label for="PARTY B"><input type="radio" name="party" id="PARTY B" value="PARTY B"> PARTY B</label><br>
+        <label for="PARTY C"><input type="radio" name="party" id="PARTY C" value="PARTY C"> PARTY C</label><br>
+        <label for="PARTY D"><input type="radio" name="party" id="PARTY D" value="PARTY D"> PARTY D</label><br>
+        <label for="PARTY E"><input type="radio" name="party" id="PARTY E" value="PARTY E"> PARTY E</label><br>
+        <label for="PARTY F"><input type="radio" name="party" id="PARTY F" value="PARTY F"> PARTY F</label><br>
+        <label for="NOTA"><input type="radio" name="party" id="NOTA" value="NOTA" class="nota"> NOTA </label><br>
+        <button id="start-record-btn" class="btn">Start Voice</button>
+        <p id="status"></p>
+        <p id="result"></p>
+    <div class="voting-options">
+        <button class="v">Party A</button>
+        <button class="v">Party B</button>
+        <button class="v">Party C</button>
+        <button class="v">Party D</button>
+        <button class="v">Party E</button>
+        <button class="v">PARTY F</button>
+        <button class="v">NOTA</button>
+    </div>
+    <button id="voteButton" class="btn">Vote</button>
+
+    <script>
+        document.getElementById('voteButton').addEventListener('click', function() {
+    var selectedParty = document.querySelector('input[name="party"]:checked');
+    if (selectedParty) {
+        var partyName = selectedParty.value;
+        var partyVotes = localStorage.getItem(partyName);
+        if (partyVotes) {
+            partyVotes = parseInt(partyVotes) + 1;
+        } else {
+            partyVotes = 1;
+        }
+        localStorage.setItem(partyName, partyVotes);
+        alert("Thank you for voting for " + partyName + "!");
+        window.location.href = "index.html";
+    } else {
+        alert("Please select a party to vote for.");
+    }
+});
+const startRecordBtn = document.getElementById('start-record-btn');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        const votingOptions = document.querySelectorAll('.voting-options button');
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.onstart = () => {
+                status.textContent = 'Voice recognition started. Please speak.';
+            };
+            recognition.onspeechend = () => {
+                status.textContent = 'Failed to Recognise the party,Try Again.';
+                recognition.stop();
+            };
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript.toLowerCase();
+                status.textContent = 'Voice recognition result received: ' + speechResult;
+                votingOptions.forEach(option => {
+                    const optionText = option.textContent.toLowerCase();
+                    if (speechResult.includes(optionText)) {
+                        alert(result.textContent = 'You voted for: ' + option.textContent);
+                        window.location.href="index.html";
+                    }
+                });
+            };
+            recognition.onerror = (event) => {
+                status.textContent = 'Error occurred in recognition: ' + event.error;
+            };
+            startRecordBtn.addEventListener('click', () => {
+                recognition.start();
+            });
+        } else {
+            status.textContent = 'Sorry, your browser does not support voice recognition.';
+        }
+        function re(){
+            alert(result.textContent = 'You voted for: ' + option.textContent);
+        }
+    </script>
+</body>
+</html>
