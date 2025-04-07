@@ -1,13 +1,34 @@
-# Online-Voting-System
-This webpage is a demo for Secured online voting system to increase the voting percentage.
-If the voter is unable to vote in the voting center for some personal issues or outside of our country peoples are unable to vote to solve this type of issues and to increase the voting percentage the online voting system can be introduced this webpage is the demo and idea implementaion page for online voting system,
-Features:  
-       I this demo the voters are unable to vote more than one time.
-       This demo uses the voters aadhar number as login credentials with generating One Time Password.
-       The Admin can view the result of the vote with verifying true and false votes.
-       The uneducated voters can also able to vote with their voice.
-       Admin has a fixed credentials to login their page.
-       Included contact us.
-To try:
-       Type your aadhar number.
-       use OTP as 123456(fixed).
+# Online Voting System
+
+###### [Click Here! This will redirect to my project site](https://yuga-04.github.io/Online-Voting-System/)
+
+---
+
+## 📄 Project Description
+
+This webpage is a **demo for a secured online voting system** aimed at increasing the voting percentage.
+
+Often, voters are unable to cast their votes due to personal issues or being out of the country. This project proposes an **online voting solution** to tackle these problems and improve participation in the electoral process.
+
+This webpage showcases the **demo and idea implementation** for such a system.
+
+---
+
+## ✅ Features
+
+1. 🔒 Voters are restricted from voting more than once.
+2. 🆔 Aadhar number is used as the login credential, along with a **One Time Password (OTP)**.
+3. 🗳️ Admin can view vote results and verify valid vs invalid votes.
+4. 🗣️ Uneducated voters can vote using **voice input**.
+5. 🔐 Admin login has fixed credentials.
+6. 📬 A "Contact Us" section is included.
+
+---
+
+## 🧪 To Try the Demo:
+
+- Type your Aadhar number.
+- Use the OTP: `123456` (fixed for demo purposes).
+
+---
+
